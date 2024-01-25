@@ -1,0 +1,246 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API HTTPServer for Effective Mobile Test Task",
+        "title": "Effective Mobile API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/persons": {
+            "get": {
+                "description": "get persons",
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Get",
+                "operationId": "get-persons",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "person id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "person name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "person surname",
+                        "name": "surname",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "person patronymic",
+                        "name": "patronymic",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "person age",
+                        "name": "age",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "person gender",
+                        "name": "gender",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "person nationality",
+                        "name": "nationality",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/persons.GetOneResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/persons/create": {
+            "post": {
+                "description": "create person",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Create",
+                "operationId": "create-person",
+                "parameters": [
+                    {
+                        "description": "person's info with patronymic",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/persons.CreateOneRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/persons/delete": {
+            "post": {
+                "description": "delete person",
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Delete",
+                "operationId": "delete-person",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "person id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/persons/update": {
+            "put": {
+                "description": "update person",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Update",
+                "operationId": "update-person",
+                "parameters": [
+                    {
+                        "description": "person's update info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/persons.UpdateOneRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "persons.CreateOneRequest": {
+            "type": "object",
+            "required": [
+                "name",
+                "surname"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "patronymic": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                }
+            }
+        },
+        "persons.GetManyResponse": {
+            "type": "object",
+            "properties": {
+                "persons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/persons.GetManyResponse"
+                    }
+                }
+            }
+        },
+        "persons.GetOneResponse": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nationality": {
+                    "type": "string"
+                },
+                "patronymic": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                }
+            }
+        },
+        "persons.UpdateOneRequest": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "gender": {
+                    "type": "string",
+                    "enum": [
+                        "male",
+                        "female"
+                    ]
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "nationality": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "patronymic": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "surname": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        }
+    }
+}

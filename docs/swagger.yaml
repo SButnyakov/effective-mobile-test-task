@@ -1,0 +1,166 @@
+basePath: /api/v1
+definitions:
+  persons.CreateOneRequest:
+    properties:
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    required:
+    - name
+    - surname
+    type: object
+  persons.GetManyResponse:
+    properties:
+      persons:
+        items:
+          $ref: '#/definitions/persons.GetManyResponse'
+        type: array
+    type: object
+  persons.GetOneResponse:
+    properties:
+      age:
+        type: integer
+      gender:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      nationality:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+  persons.UpdateOneRequest:
+    properties:
+      age:
+        minimum: 0
+        type: integer
+      gender:
+        enum:
+        - male
+        - female
+        type: string
+      id:
+        type: integer
+      name:
+        minLength: 1
+        type: string
+      nationality:
+        minLength: 1
+        type: string
+      patronymic:
+        minLength: 1
+        type: string
+      surname:
+        minLength: 1
+        type: string
+    required:
+    - id
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API HTTPServer for Effective Mobile Test Task
+  title: Effective Mobile API
+  version: "1.0"
+paths:
+  /persons:
+    get:
+      description: get persons
+      operationId: get-persons
+      parameters:
+      - description: person id
+        in: query
+        name: id
+        type: integer
+      - description: person name
+        in: query
+        name: name
+        type: string
+      - description: person surname
+        in: query
+        name: surname
+        type: string
+      - description: person patronymic
+        in: query
+        name: patronymic
+        type: string
+      - description: person age
+        in: query
+        name: age
+        type: integer
+      - description: person gender
+        in: query
+        name: gender
+        type: string
+      - description: person nationality
+        in: query
+        name: nationality
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/persons.GetOneResponse'
+      summary: Get
+      tags:
+      - persons
+  /persons/create:
+    post:
+      consumes:
+      - application/json
+      description: create person
+      operationId: create-person
+      parameters:
+      - description: person's info with patronymic
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/persons.CreateOneRequest'
+      responses: {}
+      summary: Create
+      tags:
+      - persons
+  /persons/delete:
+    post:
+      description: delete person
+      operationId: delete-person
+      parameters:
+      - description: person id
+        in: query
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: Delete
+      tags:
+      - persons
+  /persons/update:
+    put:
+      consumes:
+      - application/json
+      description: update person
+      operationId: update-person
+      parameters:
+      - description: person's update info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/persons.UpdateOneRequest'
+      responses: {}
+      summary: Update
+      tags:
+      - persons
+swagger: "2.0"
